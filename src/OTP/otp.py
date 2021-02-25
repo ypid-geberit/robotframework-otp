@@ -1,5 +1,5 @@
 import pyotp
-import datetime
+
 
 class OTP:
     """Library for generating OTP's from a secret
@@ -15,7 +15,8 @@ class OTP:
         | base32secret |
         | base32secret | timestamp |
         """
-        if not timestamp:
-            timestamp = datetime.datetime.utcnow()
         totp = pyotp.TOTP(secret)
-        return totp.at(timestamp)
+        if timestamp:
+            return totp.at(timestamp)
+        else:
+            return totp.now()
